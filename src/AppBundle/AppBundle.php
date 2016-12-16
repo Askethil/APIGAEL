@@ -1,5 +1,5 @@
 <?php
-
+//TEST
 namespace AppBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
