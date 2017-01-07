@@ -10,6 +10,7 @@ class DefaultController extends Controller
 {
     /**
      * @Route("/", name="homepage")
+     * test commit
      */
     public function indexAction(Request $request)
     {
