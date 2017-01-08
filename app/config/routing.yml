@@ -2,6 +2,13 @@ app:
     resource: "@AppBundle/Controller/"
     type:     annotation
     
+utilisateurs_list:
+    path:     /utilisateurs
+    defaults: { _controller: AppBundle:Utilisateurs:getUtilisateurs }  
+    
+utilisateurs_one:
+    path:     /utilisateurs/{idutilisateur}
+    defaults: { _controller: AppBundle:Utilisateurs:getUtilisateur }   
     
 boutiques_list:
     path:     /boutiques

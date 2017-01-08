@@ -15,25 +15,29 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Place;
 
-class PlaceController extends Controller
+class UtilisateursController extends Controller
 {
     /**
-     * @Route("/places", name="places_list")
+     * @Route("/utilisateurs", name="utilisateurs_list")
      * @Method({"GET"})
      */
-    public function getPlacesAction(Request $request)
+    public function getUtilisateursAction(Request $request)
     {
-           $places = $this->get('doctrine.orm.entity_manager')
-                ->getRepository('AppBundle:Place')
+           $Utilisateurs = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('AppBundle:Utilisateurs')
                 ->findAll();
         /* @var $places Place[] */
 
         $formatted = [];
-        foreach ($places as $place) {
+        foreach ($Utilisateurs as $Utilisateur) {
             $formatted[] = [
-               'id' => $place->getId(),
-               'name' => $place->getName(),
-               'address' => $place->getAddress(),
+               'id' => $Utilisateur->getIdutilisateur(),
+               'login' => $Utilisateur->getLogin(),
+               'Mdp' => $Utilisateur->getMdp(),
+               'Boutique' => $Utilisateur->getIdboutique(),
+               'Email' => $Utilisateur->getEmail(),
+               'Nom' => $Utilisateur->getNom(),
+               'Prenom' => $Utilisateur->getPrenom(),
             ];
         }
         return new JsonResponse($formatted);
@@ -43,24 +47,28 @@ class PlaceController extends Controller
     // code de getPlacesAction
 
     /**
-     * @Route("/places/{place_id}", name="places_one")
+     * @Route("/utilisateurs/{idutilisateur}", name="utilisateurs_one")
      * @Method({"GET"})
      */
-    public function getPlaceAction(Request $request)
+    public function getUtilisateurAction(Request $request)
     {
-        $place = $this->get('doctrine.orm.entity_manager')
-                ->getRepository('AppBundle:Place')
-                ->find($request->get('place_id'));
+        $Utilisateur = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('AppBundle:Utilisateurs')
+                ->find($request->get('idutilisateur'));
         /* @var $place Place */
         
-           if (empty($place)) {
-            return new JsonResponse(['message' => 'Place not found'], Response::HTTP_NOT_FOUND);
+           if (empty($Utilisateur)) {
+            return new JsonResponse(['message' => 'Utilisateur not found'], Response::HTTP_NOT_FOUND);
         }
         
         $formatted = [
-           'id' => $place->getId(),
-           'name' => $place->getName(),
-           'address' => $place->getAddress(),
+               'id' => $Utilisateur->getIdutilisateur(),
+               'login' => $Utilisateur->getLogin(),
+               'Mdp' => $Utilisateur->getMdp(),
+               'Boutique' => $Utilisateur->getIdboutique(),
+               'Email' => $Utilisateur->getEmail(),
+               'Nom' => $Utilisateur->getNom(),
+               'Prenom' => $Utilisateur->getPrenom(),
         ];
 
         return new JsonResponse($formatted);
