@@ -15,25 +15,31 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Place;
 
-class PlaceController extends Controller
+class ArticlesController extends Controller
 {
     /**
-     * @Route("/places", name="places_list")
+     * @Route("/articles", name="articles_list")
      * @Method({"GET"})
      */
-    public function getPlacesAction(Request $request)
+    public function getArticlesAction(Request $request)
     {
-           $places = $this->get('doctrine.orm.entity_manager')
-                ->getRepository('AppBundle:Place')
+           $articles = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('AppBundle:Articles')
                 ->findAll();
         /* @var $places Place[] */
 
         $formatted = [];
-        foreach ($places as $place) {
+        foreach ($articles as $article) {
             $formatted[] = [
-               'id' => $place->getId(),
-               'name' => $place->getName(),
-               'address' => $place->getAddress(),
+               'id' => $article->getIdarticle(),
+               'Libelle' => $article->getLib(),
+               'dateCreation' => $article->getDatecreation(),
+               'Stock' => $article->getStock(),
+               'Description' => $article->getDescription(),
+               'IdBoutique' => $article->getIdboutique(),
+               'Image' => $article->getUrlimage(),
+               'Prix' => $article->getPrix(),
+                
             ];
         }
         return new JsonResponse($formatted);

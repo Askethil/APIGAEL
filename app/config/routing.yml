@@ -2,7 +2,10 @@ app:
     resource: "@AppBundle/Controller/"
     type:     annotation
     
-
+articles_list:
+    path:     /articles
+    defaults: { _controller: AppBundle:Articles:getArticles }  
+    
 places_list:
     path:     /places
     defaults: { _controller: AppBundle:Place:getPlaces }    
