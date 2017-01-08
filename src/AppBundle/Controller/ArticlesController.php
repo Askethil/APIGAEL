@@ -49,24 +49,29 @@ class ArticlesController extends Controller
     // code de getPlacesAction
 
     /**
-     * @Route("/places/{place_id}", name="places_one")
+     * @Route("/articles/{idarticle}", name="articles_one")
      * @Method({"GET"})
      */
-    public function getPlaceAction(Request $request)
+    public function getArticleAction(Request $request)
     {
-        $place = $this->get('doctrine.orm.entity_manager')
-                ->getRepository('AppBundle:Place')
-                ->find($request->get('place_id'));
+        $article = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('AppBundle:Articles')
+                ->find($request->get('idarticle'));
         /* @var $place Place */
         
-           if (empty($place)) {
-            return new JsonResponse(['message' => 'Place not found'], Response::HTTP_NOT_FOUND);
+           if (empty($article)) {
+            return new JsonResponse(['message' => 'Article not found'], Response::HTTP_NOT_FOUND);
         }
         
         $formatted = [
-           'id' => $place->getId(),
-           'name' => $place->getName(),
-           'address' => $place->getAddress(),
+           'id' => $article->getIdarticle(),
+               'Libelle' => $article->getLib(),
+               'dateCreation' => $article->getDatecreation(),
+               'Stock' => $article->getStock(),
+               'Description' => $article->getDescription(),
+               'IdBoutique' => $article->getIdboutique(),
+               'Image' => $article->getUrlimage(),
+               'Prix' => $article->getPrix(),
         ];
 
         return new JsonResponse($formatted);

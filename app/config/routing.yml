@@ -6,6 +6,10 @@ articles_list:
     path:     /articles
     defaults: { _controller: AppBundle:Articles:getArticles }  
     
+articles_one:
+    path:     /articles/{idarticle}
+    defaults: { _controller: AppBundle:Articles:getArticle }  
+    
 places_list:
     path:     /places
     defaults: { _controller: AppBundle:Place:getPlaces }    
