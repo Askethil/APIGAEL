@@ -15,52 +15,54 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Place;
 
-class PlaceController extends Controller
+class BoutiquesController extends Controller
 {
     /**
-     * @Route("/places", name="places_list")
+     * @Route("/boutiques", name="boutiques_list")
      * @Method({"GET"})
      */
-    public function getPlacesAction(Request $request)
+    public function getBoutiquesAction(Request $request)
     {
-           $places = $this->get('doctrine.orm.entity_manager')
-                ->getRepository('AppBundle:Place')
+           $boutiques = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('AppBundle:Boutiques')
                 ->findAll();
         /* @var $places Place[] */
 
         $formatted = [];
-        foreach ($places as $place) {
+        foreach ($boutiques as $boutique) {
             $formatted[] = [
-               'id' => $place->getId(),
-               'name' => $place->getName(),
-               'address' => $place->getAddress(),
+               'id' => $boutique->getIdboutique(),
+               'nom' => $boutique->getLib(),
+               'DateCreation' => $boutique->getDatecreation(),
+               'Description' => $boutique->getDescription(),
+               'UrlImage' => $boutique->getUrlimage(),
             ];
         }
         return new JsonResponse($formatted);
     }
 
 
-    // code de getPlacesAction
-
     /**
-     * @Route("/places/{place_id}", name="places_one")
+     * @Route("/boutiques/{idboutique}", name="boutiques_one")
      * @Method({"GET"})
      */
-    public function getPlaceAction(Request $request)
+    public function getBoutiqueAction(Request $request)
     {
-        $place = $this->get('doctrine.orm.entity_manager')
-                ->getRepository('AppBundle:Place')
-                ->find($request->get('place_id'));
-        /* @var $place Place */
+        $boutique = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('AppBundle:Boutiques')
+                ->find($request->get('idboutique'));
+        /* @var $place Boutique */
         
-           if (empty($place)) {
-            return new JsonResponse(['message' => 'Place not found'], Response::HTTP_NOT_FOUND);
+           if (empty($boutique)) {
+            return new JsonResponse(['message' => 'boutique not found'], Response::HTTP_NOT_FOUND);
         }
         
         $formatted = [
-           'id' => $place->getId(),
-           'name' => $place->getName(),
-           'address' => $place->getAddress(),
+              'id' => $boutique->getIdboutique(),
+               'nom' => $boutique->getLib(),
+               'DateCreation' => $boutique->getDatecreation(),
+               'Description' => $boutique->getDescription(),
+               'UrlImage' => $boutique->getUrlimage(),
         ];
 
         return new JsonResponse($formatted);

@@ -2,6 +2,15 @@ app:
     resource: "@AppBundle/Controller/"
     type:     annotation
     
+    
+boutiques_list:
+    path:     /boutiques
+    defaults: { _controller: AppBundle:Boutiques:getBoutiques }  
+    
+boutiques_one:
+    path:     /boutiques/{idboutique}
+    defaults: { _controller: AppBundle:Boutiques:getBoutique }  
+    
 articles_list:
     path:     /articles
     defaults: { _controller: AppBundle:Articles:getArticles }  
