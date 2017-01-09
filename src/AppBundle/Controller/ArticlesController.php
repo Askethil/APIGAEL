@@ -52,4 +52,27 @@ class ArticlesController extends Controller
 
         return $article;
     }
+    
+    
+    
+         /**
+     * @Rest\View()
+     * @Rest\Post("/articles")
+     */
+    public function postArticleAction(Request $request)
+    {
+         return [
+            'payload' => [
+                $request->get('lib'),
+                $request->get('datecreation'),
+                $request->get('lib'),
+                $request->get('stock'),
+                $request->get('description'),
+                $request->get('idboutique'),
+                $request->get('urlimage'),
+                $request->get('prix'),
+                $request->get('idarticle'),
+             ]
+        ];
+    }
 }
