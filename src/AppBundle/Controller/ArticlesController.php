@@ -64,7 +64,7 @@ class ArticlesController extends Controller
 
         $article = new Articles();
         $article->setLib($request->get('lib'))
-        /*    ->setDatecreation($request->get('datecreation')) */
+            ->setDatecreation(new \DateTime ($request->get('datecreation')))
             ->setStock($request->get('stock'))
             ->setDescription($request->get('description'))
             ->setIdboutique($request->get('idboutique'))
