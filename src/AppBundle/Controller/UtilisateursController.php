@@ -18,7 +18,7 @@ class UtilisateursController extends Controller
 {
    /**
      * @Rest\View()
-     * @Rest\Get("/places")
+     * @Rest\Get("/utilisateurs")
      */
     public function getUtilisateursAction(Request $request)
     {
@@ -31,12 +31,11 @@ class UtilisateursController extends Controller
     }
 
 
-    // code de getPlacesAction
-
-    /**
-     * @Route("/utilisateurs/{idutilisateur}", name="utilisateurs_one")
-     * @Method({"GET"})
+ /**
+     * @Rest\View()
+     * @Rest\Get("/utilisateurs/{idutilisateur}")
      */
+
     public function getUtilisateurAction(Request $request)
     {
         $Utilisateur = $this->get('doctrine.orm.entity_manager')
@@ -48,16 +47,8 @@ class UtilisateursController extends Controller
             return new JsonResponse(['message' => 'Utilisateur not found'], Response::HTTP_NOT_FOUND);
         }
         
-        $formatted = [
-               'id' => $Utilisateur->getIdutilisateur(),
-               'login' => $Utilisateur->getLogin(),
-               'Mdp' => $Utilisateur->getMdp(),
-               'Boutique' => $Utilisateur->getIdboutique(),
-               'Email' => $Utilisateur->getEmail(),
-               'Nom' => $Utilisateur->getNom(),
-               'Prenom' => $Utilisateur->getPrenom(),
-        ];
 
-        return new JsonResponse($formatted);
+
+        return $Utilisateur;
     }
 }

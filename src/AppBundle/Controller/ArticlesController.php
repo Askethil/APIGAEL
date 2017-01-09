@@ -48,18 +48,8 @@ class ArticlesController extends Controller
            if (empty($article)) {
             return new JsonResponse(['message' => 'Article not found'], Response::HTTP_NOT_FOUND);
         }
-        
-        $formatted = [
-           'id' => $article->getIdarticle(),
-               'Libelle' => $article->getLib(),
-               'dateCreation' => $article->getDatecreation(),
-               'Stock' => $article->getStock(),
-               'Description' => $article->getDescription(),
-               'IdBoutique' => $article->getIdboutique(),
-               'Image' => $article->getUrlimage(),
-               'Prix' => $article->getPrix(),
-        ];
 
-        return new JsonResponse($formatted);
+
+        return $article;
     }
 }

@@ -18,7 +18,7 @@ class BoutiquesController extends Controller
 {
    /**
      * @Rest\View()
-     * @Rest\Get("/places")
+     * @Rest\Get("/boutiques")
      */
     public function getBoutiquesAction(Request $request)
     {
@@ -30,11 +30,11 @@ class BoutiquesController extends Controller
         return  $boutiques;
     }
 
-
     /**
-     * @Route("/boutiques/{idboutique}", name="boutiques_one")
-     * @Method({"GET"})
+     * @Rest\View()
+     * @Rest\Get("/boutiques/{idboutique}")
      */
+
     public function getBoutiqueAction(Request $request)
     {
         $boutique = $this->get('doctrine.orm.entity_manager')
@@ -46,14 +46,8 @@ class BoutiquesController extends Controller
             return new JsonResponse(['message' => 'boutique not found'], Response::HTTP_NOT_FOUND);
         }
         
-        $formatted = [
-              'id' => $boutique->getIdboutique(),
-               'nom' => $boutique->getLib(),
-               'DateCreation' => $boutique->getDatecreation(),
-               'Description' => $boutique->getDescription(),
-               'UrlImage' => $boutique->getUrlimage(),
-        ];
 
-        return new JsonResponse($formatted);
+
+        return $boutique;
     }
 }

@@ -2,21 +2,13 @@ app:
     resource: "@AppBundle/Controller/DefaultController.php"
     type:     annotation
     
-utilisateurs_list:
-    path:     /utilisateurs
-    defaults: { _controller: AppBundle:Utilisateurs:getUtilisateurs }  
+utilisateurs:
+    type:     rest
+    resource: AppBundle\Controller\UtilisateursController  
     
-utilisateurs_one:
-    path:     /utilisateurs/{idutilisateur}
-    defaults: { _controller: AppBundle:Utilisateurs:getUtilisateur }   
-    
-boutiques_list:
-    path:     /boutiques
-    defaults: { _controller: AppBundle:Boutiques:getBoutiques }  
-    
-boutiques_one:
-    path:     /boutiques/{idboutique}
-    defaults: { _controller: AppBundle:Boutiques:getBoutique }  
+boutiques:
+    type:     rest
+    resource: AppBundle\Controller\BoutiquesController  
     
 articles:
     type:     rest
