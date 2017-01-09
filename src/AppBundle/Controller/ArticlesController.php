@@ -7,19 +7,19 @@
  */
 namespace AppBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use FOS\RestBundle\Controller\Annotations as Rest; // alias pour toutes les annotations
 use AppBundle\Entity\Articles;
 
 class ArticlesController extends Controller
 {
     /**
-     * @Route("/articles", name="articles_list")
-     * @Method({"GET"})
+     * @Rest\View()
+     * @Rest\Get("articles")
      */
     public function getArticlesAction(Request $request)
     {
@@ -28,30 +28,16 @@ class ArticlesController extends Controller
                 ->findAll();
         /* @var $places Place[] */
 
-        $formatted = [];
-        foreach ($articles as $article) {
-            $formatted[] = [
-               'id' => $article->getIdarticle(),
-               'Libelle' => $article->getLib(),
-               'dateCreation' => $article->getDatecreation(),
-               'Stock' => $article->getStock(),
-               'Description' => $article->getDescription(),
-               'IdBoutique' => $article->getIdboutique(),
-               'Image' => $article->getUrlimage(),
-               'Prix' => $article->getPrix(),
-                
-            ];
-        }
-        return new JsonResponse($formatted);
+        return $articles;
     }
 
 
-    // code de getPlacesAction
 
-    /**
-     * @Route("/articles/{idarticle}", name="articles_one")
-     * @Method({"GET"})
+      /**
+     * @Rest\View()
+     * @Rest\Get("/articles/{idarticle}")
      */
+ 
     public function getArticleAction(Request $request)
     {
         $article = $this->get('doctrine.orm.entity_manager')

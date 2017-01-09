@@ -7,19 +7,18 @@
  */
 namespace AppBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use FOS\RestBundle\Controller\Annotations as Rest; // alias pour toutes les annotations
 use AppBundle\Entity\Utilisateurs;
 
 class UtilisateursController extends Controller
 {
-    /**
-     * @Route("/utilisateurs", name="utilisateurs_list")
-     * @Method({"GET"})
+   /**
+     * @Rest\View()
+     * @Rest\Get("/places")
      */
     public function getUtilisateursAction(Request $request)
     {
@@ -28,19 +27,7 @@ class UtilisateursController extends Controller
                 ->findAll();
         /* @var $places Place[] */
 
-        $formatted = [];
-        foreach ($Utilisateurs as $Utilisateur) {
-            $formatted[] = [
-               'id' => $Utilisateur->getIdutilisateur(),
-               'login' => $Utilisateur->getLogin(),
-               'Mdp' => $Utilisateur->getMdp(),
-               'Boutique' => $Utilisateur->getIdboutique(),
-               'Email' => $Utilisateur->getEmail(),
-               'Nom' => $Utilisateur->getNom(),
-               'Prenom' => $Utilisateur->getPrenom(),
-            ];
-        }
-        return new JsonResponse($formatted);
+        return $Utilisateurs;
     }
 
 

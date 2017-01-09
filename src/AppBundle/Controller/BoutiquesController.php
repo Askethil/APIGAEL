@@ -7,19 +7,18 @@
  */
 namespace AppBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use FOS\RestBundle\Controller\Annotations as Rest; // alias pour toutes les annotations
 use AppBundle\Entity\Boutiques;
 
 class BoutiquesController extends Controller
 {
-    /**
-     * @Route("/boutiques", name="boutiques_list")
-     * @Method({"GET"})
+   /**
+     * @Rest\View()
+     * @Rest\Get("/places")
      */
     public function getBoutiquesAction(Request $request)
     {
@@ -28,17 +27,7 @@ class BoutiquesController extends Controller
                 ->findAll();
         /* @var $places Place[] */
 
-        $formatted = [];
-        foreach ($boutiques as $boutique) {
-            $formatted[] = [
-               'id' => $boutique->getIdboutique(),
-               'nom' => $boutique->getLib(),
-               'DateCreation' => $boutique->getDatecreation(),
-               'Description' => $boutique->getDescription(),
-               'UrlImage' => $boutique->getUrlimage(),
-            ];
-        }
-        return new JsonResponse($formatted);
+        return  $boutiques;
     }
 
 
