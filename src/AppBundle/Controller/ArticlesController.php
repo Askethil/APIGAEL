@@ -55,24 +55,27 @@ class ArticlesController extends Controller
     
     
     
-         /**
-     * @Rest\View()
-     * @Rest\Post("/articles")
+     /**
+     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\Post("/article")
      */
     public function postArticleAction(Request $request)
     {
-         return [
-            'payload' => [
-                $request->get('lib'),
-                $request->get('datecreation'),
-                $request->get('lib'),
-                $request->get('stock'),
-                $request->get('description'),
-                $request->get('idboutique'),
-                $request->get('urlimage'),
-                $request->get('prix'),
-                $request->get('idarticle'),
-             ]
-        ];
+
+        $article = new Articles();
+        $article->setLib($request->get('lib'))
+        /*    ->setDatecreation($request->get('datecreation')) */
+            ->setStock($request->get('stock'))
+            ->setDescription($request->get('description'))
+            ->setIdboutique($request->get('idboutique'))
+            ->setUrlimage($request->get('urlimage'))
+            ->setPrix($request->get('prix'));
+        
+        $em = $this->get('doctrine.orm.entity_manager');
+        $em->persist($article);
+        $em->flush();
+
+        return $article;
+        
     }
 }
