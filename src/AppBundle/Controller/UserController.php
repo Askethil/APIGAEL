@@ -13,13 +13,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use AppBundle\Entity\Place;
+use AppBundle\Entity\User;
 
 class UserController extends Controller
 {
     /**
-     * @Route("/users", name="users_list")
-     * @Method({"GET"})
+     * @Get("/users")
      */
     public function getUsersAction(Request $request)
     {
@@ -43,17 +42,14 @@ class UserController extends Controller
     
     
     
-     // code de getUsersAction
-
     /**
-     * @Route("/users/{id}", name="users_one")
-     * @Method({"GET"})
+     * @Get("/users/{user_id}")
      */
     public function getUserAction(Request $request)
     {
         $user = $this->get('doctrine.orm.entity_manager')
                 ->getRepository('AppBundle:User')
-                ->find($request->get('id'));
+                ->find($request->get('user_id'));
         /* @var $user User */
 
           if (empty($user)) {

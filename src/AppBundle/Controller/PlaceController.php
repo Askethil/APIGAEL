@@ -7,19 +7,19 @@
  */
 namespace AppBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use FOS\RestBundle\Controller\Annotations as Rest; // alias pour toutes les annotations
 use AppBundle\Entity\Place;
 
 class PlaceController extends Controller
 {
-    /**
-     * @Route("/places", name="places_list")
-     * @Method({"GET"})
+   /**
+     * @Rest\View()
+     * @Rest\Get("/places")
      */
     public function getPlacesAction(Request $request)
     {
@@ -28,29 +28,18 @@ class PlaceController extends Controller
                 ->findAll();
         /* @var $places Place[] */
 
-        $formatted = [];
-        foreach ($places as $place) {
-            $formatted[] = [
-               'id' => $place->getId(),
-               'name' => $place->getName(),
-               'address' => $place->getAddress(),
-            ];
-        }
-        return new JsonResponse($formatted);
+       return $places;
     }
 
-
-    // code de getPlacesAction
-
-    /**
-     * @Route("/places/{place_id}", name="places_one")
-     * @Method({"GET"})
+     /**
+     * @Rest\View()
+     * @Rest\Get("/places/{id}")
      */
-    public function getPlaceAction(Request $request)
+    public function getPlaceAction( Request $request)
     {
         $place = $this->get('doctrine.orm.entity_manager')
                 ->getRepository('AppBundle:Place')
-                ->find($request->get('place_id'));
+                ->find($request->get('id'));
         /* @var $place Place */
         
            if (empty($place)) {
@@ -63,6 +52,14 @@ class PlaceController extends Controller
            'address' => $place->getAddress(),
         ];
 
-        return new JsonResponse($formatted);
+        // Récupération du view handler
+        $viewHandler = $this->get('fos_rest.view_handler');
+
+        // Création d'une vue FOSRestBundle
+        $view = View::create($formatted);
+        $view->setFormat('json');
+
+        // Gestion de la réponse
+        return $viewHandler->handle($view);
     }
 }

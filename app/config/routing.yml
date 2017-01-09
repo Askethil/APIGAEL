@@ -1,5 +1,5 @@
 app:
-    resource: "@AppBundle/Controller/"
+    resource: "@AppBundle/Controller/DefaultController.php"
     type:     annotation
     
 utilisateurs_list:
@@ -26,18 +26,11 @@ articles_one:
     path:     /articles/{idarticle}
     defaults: { _controller: AppBundle:Articles:getArticle }  
     
-places_list:
-    path:     /places
-    defaults: { _controller: AppBundle:Place:getPlaces }    
+places:
+    type:     rest
+    resource: AppBundle\Controller\PlaceController
     
-places_one:
-    path:     /places/{place_id}
-    defaults: { _controller: AppBundle:Place:getPlace }    
+users:
+    type:     rest
+    resource: AppBundle\Controller\PlaceController
     
-users_list:
-    path:     /users
-    defaults: { _controller: AppBundle:User:getUsers }    
-    
-users_ones:
-    path:     /users/{id}
-    defaults: { _controller: AppBundle:User:getUser }   
