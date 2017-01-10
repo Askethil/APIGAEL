@@ -16,7 +16,7 @@ class UtilisateursType extends AbstractType
         $builder->add('mdp');
         $builder->add('idboutique');
         $builder->add('email');
-        $builder->add('idutilisateur');
+       
     }
 
     public function configureOptions(OptionsResolver $resolver)

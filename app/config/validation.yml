@@ -65,7 +65,5 @@ AppBundle\Entity\Utilisateurs:
         email:
             - NotBlank: ~
             - Type: string
-        idutilisateur:
-            - NotBlank: ~
-            - Type: integer
+      
         
