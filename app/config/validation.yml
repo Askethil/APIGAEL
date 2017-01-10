@@ -1,0 +1,28 @@
+## YAML Template.
+---
+AppBundle\Entity\Articles:
+    constraints:
+       
+    properties:
+        lib:
+            - NotBlank: ~
+            - Type: string
+        datecreation:
+            - NotBlank: ~
+            - Type: dateTime
+        stock:
+            - NotBlank: ~
+            - Type: integer
+        description:
+            - NotBlank: ~
+            - Type: string 
+        idboutique:
+            - NotBlank: ~
+            - Type: integer
+        urlimage:
+            - NotBlank: ~
+            - Type: string
+        prix:
+            - NotBlank: ~
+            - Type: float
+        

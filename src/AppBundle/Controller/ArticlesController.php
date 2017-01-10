@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\Annotations as Rest; // alias pour toutes les annotations
+use AppBundle\Form\Type\ArticlesType;
 use AppBundle\Entity\Articles;
 
 class ArticlesController extends Controller
@@ -63,19 +64,18 @@ class ArticlesController extends Controller
     {
 
         $article = new Articles();
-        $article->setLib($request->get('lib'))
-            ->setDatecreation(new \DateTime ($request->get('datecreation')))
-            ->setStock($request->get('stock'))
-            ->setDescription($request->get('description'))
-            ->setIdboutique($request->get('idboutique'))
-            ->setUrlimage($request->get('urlimage'))
-            ->setPrix($request->get('prix'));
+        $form = $this->createForm(ArticlesType::class, $article);
+        $form->submit($request->request->all()); // Validation des données
+         if ($form->isValid()) {
+            $em = $this->get('doctrine.orm.entity_manager');
+            $em->persist($article);
+            $em->flush();
+            return $article;
+        } else {
+            return $form;
+        }
         
-        $em = $this->get('doctrine.orm.entity_manager');
-        $em->persist($article);
-        $em->flush();
-
-        return $article;
+      
         
     }
 }
