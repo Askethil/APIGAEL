@@ -50,4 +50,27 @@ class BoutiquesController extends Controller
 
         return $boutique;
     }
+    
+     /**
+     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\Post("/boutique")
+     */
+    public function postBoutiqueAction(Request $request)
+    {
+
+        $boutique = new Boutiques();
+        $form = $this->createForm(ArticlesType::class, $boutique);
+        $form->submit($request->request->all()); // Validation des données
+         if ($form->isValid()) {
+            $em = $this->get('doctrine.orm.entity_manager');
+            $em->persist($boutique);
+            $em->flush();
+            return $boutique;
+        } else {
+            return $form;
+        }
+        
+      
+        
+    }
 }

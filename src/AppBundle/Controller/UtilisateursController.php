@@ -51,4 +51,28 @@ class UtilisateursController extends Controller
 
         return $Utilisateur;
     }
+    
+    
+             /**
+     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\Post("/utilisateur")
+     */
+    public function postUtilisateurAction(Request $request)
+    {
+
+        $Utilisateur = new Utilisateurs();
+        $form = $this->createForm(ArticlesType::class, $Utilisateur);
+        $form->submit($request->request->all()); // Validation des données
+         if ($form->isValid()) {
+            $em = $this->get('doctrine.orm.entity_manager');
+            $em->persist($Utilisateur);
+            $em->flush();
+            return $Utilisateur;
+        } else {
+            return $form;
+        }
+        
+      
+        
+    }
 }

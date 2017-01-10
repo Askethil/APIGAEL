@@ -25,4 +25,47 @@ AppBundle\Entity\Articles:
         prix:
             - NotBlank: ~
             - Type: float
+            
+AppBundle\Entity\Boutiques:
+    constraints:
+       
+    properties:
+        lib:
+            - NotBlank: ~
+            - Type: string
+        datecreation:
+            - NotBlank: ~
+            - Type: dateTime
+        description:
+            - NotBlank: ~
+            - Type: string 
+        urlimage:
+            - NotBlank: ~
+            - Type: string
+            
+AppBundle\Entity\Utilisateurs:
+    constraints:
+       
+    properties:
+        nom:
+            - NotBlank: ~
+            - Type: string
+        prenom:
+            - NotBlank: ~
+            - Type: string
+        login:
+            - NotBlank: ~
+            - Type: string
+        mdp:
+            - NotBlank: ~
+            - Type: string 
+        idboutique:
+            - NotBlank: ~
+            - Type: integer
+        email:
+            - NotBlank: ~
+            - Type: string
+        idutilisateur:
+            - NotBlank: ~
+            - Type: integer
         
