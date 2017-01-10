@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\Annotations as Rest; // alias pour toutes les annotations
+use AppBundle\Form\Type\UtilisateursType;
 use AppBundle\Entity\Utilisateurs;
 
 class UtilisateursController extends Controller
@@ -61,7 +62,7 @@ class UtilisateursController extends Controller
     {
 
         $Utilisateur = new Utilisateurs();
-        $form = $this->createForm(ArticlesType::class, $Utilisateur);
+        $form = $this->createForm(UtilisateursType::class, $Utilisateur);
         $form->submit($request->request->all()); // Validation des données
          if ($form->isValid()) {
             $em = $this->get('doctrine.orm.entity_manager');
