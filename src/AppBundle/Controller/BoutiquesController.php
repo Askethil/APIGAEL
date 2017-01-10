@@ -74,4 +74,21 @@ class BoutiquesController extends Controller
       
         
     }
+    
+     /**
+     * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
+     * @Rest\Delete("/boutique/{idboutique}")
+     */
+    public function removeBoutiqueAction(Request $request)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $boutique = $em->getRepository('AppBundle:Boutiques')
+                    ->find($request->get('idboutique'));
+        /* @var $place Place */
+
+        if ($boutique) {
+            $em->remove($boutique);
+            $em->flush();
+        }
+    }
 }

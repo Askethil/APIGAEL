@@ -76,4 +76,22 @@ class UtilisateursController extends Controller
       
         
     }
+    
+    
+         /**
+     * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
+     * @Rest\Delete("/utilisateur/{idutilisateur}")
+     */
+    public function removeUtilisateurAction(Request $request)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $Utilisateur = $em->getRepository('AppBundle:Utilisateurs')
+                    ->find($request->get('idutilisateur'));
+        /* @var $place Place */
+
+        if ($Utilisateur) {
+            $em->remove($Utilisateur);
+            $em->flush();
+        }
+    }
 }

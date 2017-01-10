@@ -78,4 +78,22 @@ class ArticlesController extends Controller
       
         
     }
+    
+    
+     /**
+     * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
+     * @Rest\Delete("/article/{idarticle}")
+     */
+    public function removeArticleAction(Request $request)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $article = $em->getRepository('AppBundle:Articles')
+                    ->find($request->get('idarticle'));
+        /* @var $place Place */
+
+        if ($article) {
+            $em->remove($article);
+            $em->flush();
+        }
+    }
 }
