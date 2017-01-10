@@ -91,9 +91,7 @@ class ArticlesController extends Controller
                     ->find($request->get('idarticle'));
         /* @var $place Place */
 
-        if ($article) {
-            $em->remove($article);
-            $em->flush();
-        }
+        $em->remove($article);
+        $em->flush();
     }
 }
