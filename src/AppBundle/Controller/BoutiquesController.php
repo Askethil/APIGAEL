@@ -7,6 +7,8 @@
  */
 namespace AppBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -89,6 +91,43 @@ class BoutiquesController extends Controller
         if ($boutique) {
             $em->remove($boutique);
             $em->flush();
+        }
+    }
+    
+    
+    
+    
+     /**
+     * @Rest\View()
+     * @Rest\Patch("/boutique/{idboutique}")
+     */
+    public function patchBoutiqueAction(Request $request)
+    {
+        return $this->updateBoutique($request, false);
+    }
+
+    private function updateBoutique(Request $request, $clearMissing)
+    {
+        $boutique = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('AppBundle:Boutiques')
+                ->find($request->get('idboutique')); // L'identifiant en tant que paramètre n'est plus nécessaire
+        /* @var $user User */
+
+        if (empty($boutique)) {
+            return new JsonResponse(['message' => 'Boutique not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        $form = $this->createForm(BoutiquesType::class, $boutique);
+
+        $form->submit($request->request->all(), $clearMissing);
+
+        if ($form->isValid()) {
+            $em = $this->get('doctrine.orm.entity_manager');
+            $em->persist($boutique);
+            $em->flush();
+            return $boutique;
+        } else {
+            return $form;
         }
     }
 }
